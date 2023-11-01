@@ -1,0 +1,1 @@
+11/10/2023	 16:10:86	816676a2-f7bd-4c6f-b9ca-93ee487111f2	Error : Not allowed by CORS

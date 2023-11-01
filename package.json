@@ -1,0 +1,28 @@
+{
+  "name": "courseadviser_ai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MaziVincent/CourseAdviser_AI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaziVincent/CourseAdviser_AI/issues"
+  },
+  "homepage": "https://github.com/MaziVincent/CourseAdviser_AI#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "date-fns": "^2.30.0",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "uuid": "^9.0.1"
+  }
+}
