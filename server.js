@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const cors = require("cors");
+const corsOptions = require("./config/corsOptions")
 const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
 const PORT = process.env.PORT || 3600;
@@ -22,6 +23,9 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "/public")));
 
 app.use('/', require('./routes/home'))
+app.use('/register',require('./routes/register'));
+app.use('/login', require('./routes/auth'))
+app.use('/students', require('./routes/students'))
 
 app.all("*", (req, res) => {
   res.status(404);

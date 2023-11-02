@@ -10,7 +10,7 @@ const createLog = async (message, logName) => {
 
     const logDate = format(new Date(), 'dd/MM/yyyy\t HH:MM:SS');
     const logMessage = `${logDate}\t${uuid()}\t${message}\n`
-    console.log(logMessage)
+    //console.log(logMessage)
     try{
         if(!fs.existsSync(path.join(__dirname,'..','logs'))){
             await fsPromises.mkdir(path.join(__dirname,'..','logs'));

@@ -5,3 +5,11 @@
 11/10/2023	 16:10:86	c6445200-725e-428c-8beb-19d4ff51c200	GET	undefined	/
 11/10/2023	 16:10:96	dd1d37f6-6dc7-47b2-8531-4dc5c6eeeb27	GET	undefined	/
 11/10/2023	 18:10:32	4fcbad7a-7c34-4a24-b0b4-e660e969bf4c	GET	undefined	/
+01/11/2023	 16:11:22	7999d87b-b38e-4b9c-b352-f8e54ab98208	POST	undefined	/register
+01/11/2023	 16:11:69	c289ef67-4887-45a6-bc8f-ebe13708b596	POST	undefined	/register
+01/11/2023	 16:11:89	e16cc730-caff-4d59-9271-25eb57430fb0	POST	undefined	/register
+01/11/2023	 16:11:96	a351590e-54a7-4d72-9850-ec05148033ec	POST	undefined	/register
+01/11/2023	 16:11:19	7ca28ade-74f6-42a9-be31-5a58ae028f2e	POST	undefined	/register
+01/11/2023	 17:11:65	8cfd0435-4bc2-4079-84b9-c1d7e1a224a6	POST	undefined	/login
+01/11/2023	 17:11:14	8f5a42ac-6d0a-450f-9faa-15a494779bf5	POST	undefined	/login
+01/11/2023	 17:11:10	eb26aa4e-f6d6-4664-bbaf-53255bbc082e	POST	undefined	/login
