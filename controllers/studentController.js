@@ -2,7 +2,7 @@
 
 const getStudents = (req, res) => {
 
-    res.status.json({'success' : 'students gotten'})
+    res.status(200).json({'success' : 'students gotten'})
 }
 
 module.exports = {getStudents}

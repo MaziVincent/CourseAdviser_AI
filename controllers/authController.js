@@ -42,7 +42,7 @@ const handleLogin = async (req, res) => {
     const otherStudents = studentsDb.students.filter(std => std.email !== foundStudent.email);
     const currentStudent = {...foundStudent, refreshToken}
     studentsDb.setStudents([...otherStudents,currentStudent]);
-    await fsPromises(path.join(__dirname,'..','models','students.json'),
+    await fsPromises.writeFile(path.join(__dirname,'..','models','students.json'),
         JSON.stringify(studentsDb.students));
 
     res.cookie('refreshToken', refreshToken, {httpOnly:true, maxAge:24 * 60 * 60 * 1000});
@@ -53,4 +53,34 @@ const handleLogin = async (req, res) => {
 
 }
 
-module.exports = {handleLogin}
+const handleLogout = async (req, res) => {
+
+    const cookies = req.cookies
+    //check if there is a cookie called refreshToken
+    if(!cookies.refreshToken) return res.sendStatus(204); //No content
+
+    const refreshToken = cookies.refreshToken;
+    //check if user exist
+    const foundStudent = studentsDb.students.find(std => std.refreshToken === refreshToken);
+    if(!foundStudent){
+        res.clearCookie('refreshToken', {httpOnly:true, maxAge:24 * 60 * 60 * 1000})
+        return res.sendStatus(204); //No Content
+
+    } 
+
+    //Delete from DB
+
+    const otherStudents = studentsDb.students.filter(std => std.refreshToken !== foundStudent.refreshToken);
+    const currentStudent = {...foundStudent, refreshToken:''}
+    studentsDb.setStudents([...otherStudents,currentStudent]);
+    await fsPromises.writeFile(path.join(__dirname,'..','models','students.json'),
+    JSON.stringify(studentsDb.students));
+    
+
+    res.clearCookie('refreshToken', {httpOnly:true, maxAge:24 * 60 * 60 * 1000})
+    res.sendStatus(204); //No Content
+
+
+}
+
+module.exports = {handleLogin, handleLogout}
