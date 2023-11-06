@@ -8,8 +8,8 @@ const studentsDb = {
 const fsPromises = require('fs').promises;
 const path = require('path');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const {generateAccessToken, generateRefreshToken} = require('../services/generateToken')
+
 
 const handleLogin = async (req, res) => {
 
@@ -27,17 +27,10 @@ const handleLogin = async (req, res) => {
        return res.sendStatus(401);
     }
 
+    const roles = Object.values(foundStudent.roles);
       //create jwt
-      const accessToken = jwt.sign(
-        {'email' : foundStudent.email},
-        process.env.ACCESS_TOKEN_SECRET,
-        {expiresIn: '30s'}
-    );
-    const refreshToken = jwt.sign(
-        {'email' : foundStudent.email},
-        process.env.REFRESH_TOKEN_SECRET,
-        {expiresIn: '1d'}
-    );
+      const accessToken = generateAccessToken(foundStudent.email,roles);
+    const refreshToken = generateRefreshToken(foundStudent.email);
 
     const otherStudents = studentsDb.students.filter(std => std.email !== foundStudent.email);
     const currentStudent = {...foundStudent, refreshToken}
@@ -45,7 +38,7 @@ const handleLogin = async (req, res) => {
     await fsPromises.writeFile(path.join(__dirname,'..','models','students.json'),
         JSON.stringify(studentsDb.students));
 
-    res.cookie('refreshToken', refreshToken, {httpOnly:true, maxAge:24 * 60 * 60 * 1000});
+    res.cookie('refreshToken', refreshToken, {httpOnly:true, sameSite:'None', secure:true, maxAge:24 * 60 * 60 * 1000});
     
     res.json({accessToken})
 
@@ -63,7 +56,7 @@ const handleLogout = async (req, res) => {
     //check if user exist
     const foundStudent = studentsDb.students.find(std => std.refreshToken === refreshToken);
     if(!foundStudent){
-        res.clearCookie('refreshToken', {httpOnly:true, maxAge:24 * 60 * 60 * 1000})
+        res.clearCookie('refreshToken', {httpOnly:true, sameSite:'None', secure:true, maxAge:24 * 60 * 60 * 1000})
         return res.sendStatus(204); //No Content
 
     } 
@@ -77,7 +70,7 @@ const handleLogout = async (req, res) => {
     JSON.stringify(studentsDb.students));
     
 
-    res.clearCookie('refreshToken', {httpOnly:true, maxAge:24 * 60 * 60 * 1000})
+    res.clearCookie('refreshToken', {httpOnly:true,sameSite:'None', secure:true, maxAge:24 * 60 * 60 * 1000})
     res.sendStatus(204); //No Content
 
 

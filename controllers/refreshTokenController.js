@@ -8,7 +8,7 @@ const studentsDb = {
 }
 
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const {generateAccessToken} = require('../services/generateToken')
 
 const handleRefreshToken = (req, res) => {
 
@@ -26,12 +26,10 @@ const handleRefreshToken = (req, res) => {
         process.env.REFRESH_TOKEN_SECRET,
         (err, decoded)=>{
             if(err || foundStudent.email !== decoded.email) return res.sendStatus(403);
-             //create jwt
-        const accessToken = jwt.sign(
-            {'email' : foundStudent.email},
-            process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: '30s'}
-        );
+            
+            const roles = Object.values(foundStudent.roles);
+            //create jwt
+        const accessToken = generateAccessToken(foundStudent.email, roles)
         res.json({accessToken})
         }
     );

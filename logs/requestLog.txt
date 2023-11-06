@@ -29,3 +29,13 @@
 02/11/2023	 13:11:52	6338511c-5a54-48bf-a81c-40a99a621963	GET	undefined	/refresh
 02/11/2023	 14:11:98	880c12cd-180c-4e3e-99ae-2446782af333	GET	undefined	/logout
 02/11/2023	 14:11:64	7d7bc263-0d2e-4b90-9afc-a752629ed964	GET	undefined	/refresh
+03/11/2023	 07:11:13	5ca4a647-e0a1-43dd-8db0-964aa235f851	POST	undefined	/login
+03/11/2023	 07:11:21	cdab4948-718f-4a2c-9623-939d65b1eb75	POST	undefined	/login
+03/11/2023	 07:11:89	7a179edc-57b2-4528-900e-f3ae18c94932	POST	undefined	/login
+03/11/2023	 07:11:53	a40ae7d6-f0ec-44c7-b5a8-51fc3dd8e56b	GET	undefined	/students/1
+03/11/2023	 07:11:68	bbfcffa2-0d89-42eb-941f-7b9cadf63f82	POST	undefined	/login
+03/11/2023	 07:11:76	996b27e7-f336-4ac3-bea9-b9219e34414e	GET	undefined	/students/1
+06/11/2023	 15:11:66	c89db0c9-1cb6-4310-b3ea-b4cf30f8a4b3	POST	undefined	/register
+06/11/2023	 15:11:96	98a16d4b-3276-4b18-af4a-525614c0ce5e	POST	undefined	/register/admin
+06/11/2023	 15:11:76	f71e71d2-170a-467a-8768-93377e238bf4	POST	undefined	/register/admin
+06/11/2023	 15:11:20	dd5d9ed0-cb04-47b9-83fa-a4da95cdc7b0	POST	undefined	/register/admin
