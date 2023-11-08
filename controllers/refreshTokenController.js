@@ -1,24 +1,19 @@
 
 
-
-
-const studentsDb = {
-    students:require('../models/students.json'),
-    setStudents(data){this.students = data}
-}
-
+const User = require('../models/User')
 const jwt = require('jsonwebtoken');
 const {generateAccessToken} = require('../services/generateToken')
 
-const handleRefreshToken = (req, res) => {
+const handleRefreshToken = async (req, res) => {
 
-    const cookies = req.cookies
+    const cookies = req.cookies;
     //check if there is a cookie called refreshToken
+    console.log(cookies.refreshToken)
     if(!cookies.refreshToken) return res.sendStatus(401);
 
     const refreshToken = cookies.refreshToken;
     //check if user exist
-    const foundStudent = studentsDb.students.find(std => std.refreshToken === refreshToken);
+    const foundStudent = await User.findOne({refreshToken}).exec();
     if(!foundStudent) return res.sendStatus(403); //forbidden
     
     jwt.verify(
