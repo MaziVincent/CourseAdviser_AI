@@ -54,7 +54,7 @@ const Hero = () => {
               focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base
                px-5 py-2.5 text-center text-gray-50
                mr-3 md:mr-0 dark:bg-blue-500 dark:hover:bg-blue-600 "
-               onClick={()=>openModal()}
+               to='/register'
             >         
                         Get Started </Link>
                 </div>

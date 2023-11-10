@@ -6,9 +6,11 @@ const bcrypt = require('bcrypt');
 
 const handleNewStudent = async (req, res) => {
 
-    const { firstname, lastname, studentId, phoneNumber,gender, email, password } = req.body;
+    console.log(req.body)
+    const { firstname, lastname, regNumber, phoneNumber,gender, email, password } = req.body;
+    console.log(firstname, lastname)
     if(!firstname || !lastname ) return res.status(400).json({'message' : 'firstname and lastname required'});
-    if(!studentId ) return res.status(400).json({'message' : 'student ID required'});
+    if(!regNumber ) return res.status(400).json({'message' : 'student ID required'});
     if(!phoneNumber || !gender ) return res.status(400).json({'message' : 'Phonenumber and gender required'});
     if(!email || !password) return res.status(400).json({'message' : 'email and password required'});
     //check for dupicate student
@@ -24,7 +26,7 @@ const handleNewStudent = async (req, res) => {
         const newStudent = await User.create( {
                             'firstname':firstname,
                             'lastname':lastname,
-                            'studentId':studentId,
+                            'regNumber':regNumber,
                             'phoneNumber':phoneNumber,
                             'gender' : gender,
                             'email' : email,

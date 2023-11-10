@@ -1,2 +1,3 @@
 11/10/2023	 16:10:86	816676a2-f7bd-4c6f-b9ca-93ee487111f2	Error : Not allowed by CORS
 03/11/2023	 07:11:16	f4548c90-420c-47a5-9cbe-27a7f8314b8d	TypeError : allowedOrigins.includes is not a function
+09/11/2023	 09:11:01	7b76a9f9-9858-49ea-a9e7-6fecb27350e7	Error : Not allowed by CORS

@@ -37,7 +37,7 @@ const handleLogin = async (req, res) => {
     maxAge: 24 * 60 * 60 * 1000,
   });
 
-  res.json({ accessToken });
+  res.json({ accessToken , user:foundUser});
 };
 
 const handleLogout = async (req, res) => {
