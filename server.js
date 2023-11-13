@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require("express");
 const path = require("path");
 const app = express();
+const http = require('http')
+const socketIo = require('socket.io');
 const cors = require("cors");
 const corsOptions = require("./config/corsOptions")
 const { logger } = require("./middleware/logEvents");
@@ -11,7 +13,17 @@ const credentials = require('./middleware/credentials');
 const mongoose = require('mongoose');
 const connectDb = require('./config/dbConnection')
 const cookieParser = require('cookie-parser');
+const Chat = require('./models/Chat')
+const {Wit} = require('node-wit')
+const generateReplyFromIntent = require('./services/generateReplyFromIntent')
 const PORT = process.env.PORT || 3600;
+const server = http.createServer(app);
+
+const io = socketIo(server,{
+  cors : {
+        origin:process.env.NODE_ENV === "production" ? false : ["http://localhost:5174","http://127.0.0.1:5500"]
+  }
+});
 
 //CONNECT TO MONGO DB
 
@@ -61,9 +73,62 @@ app.all("*", (req, res) => {
 
 app.use(errorHandler);
 
+
 mongoose.connection.once('open', ()=>{
   console.log('Connected to MongoDB');
-  app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
+ server.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
+})
+
+//wit client
+
+const witClient = new Wit({ accessToken: `${process.env.WIT_AI_TOKEN}`});
+
+io.on('connection',(socket)=>{
+
+  console.log('New client connected');
+
+  socket.on('message', async (data)=>{
+
+    const {userId, message} = data;
+
+    console.log(data);
+
+    try{
+      const witResponse = await witClient.message(message);
+      // await axios.get(`https://api.wit.ai/message?v=20231113&q=${encodeURIComponent(message)}`,{
+      //   headers: { 'Authorization': `Bearer ${process.env.WIT_AI_TOKEN}` }
+      // });
+
+      console.log(witResponse);
+
+      const chatReply = generateReplyFromIntent(
+        witResponse.intents.length > 0 ? witResponse.intents[0].name : null,
+        witResponse.intents.length > 0 ? witResponse.intents[0].confidence : 0
+    );
+      console.log(chatReply);
+
+      const chat = new Chat({
+        message: message,
+        response : chatReply,
+        userId: userId
+      });
+
+      await chat.save();
+
+      io.emit('response',{ message, response: chatReply, userId})
+    }
+    catch(error){
+
+      socket.emit('error', error.message);
+    }
+  });
+
+ socket.on('disconnect',()=>{
+
+  console.log('Client disconnected');
+
+ });
+
 })
 
 

@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -6,9 +6,10 @@ import baseUrl from "../shared/baseUrl";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAuth from "../hooks/useAuth";
+import AuthContext from "../context/AuthProvider";
 
 const Login = () => {
-  const { auth, setAuth } = useAuth;
+  const {setAuth } = useContext(AuthContext);
   const url = `${baseUrl}login`;
   const navigate = useNavigate();
 

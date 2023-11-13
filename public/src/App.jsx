@@ -7,6 +7,7 @@ import Register from './components/Register'
 import Login from './components/Login'
 import UserDashboard from './components/UserDashboard'
 import Page404 from './shared/404'
+import ChatComponent from './components/chat/ChatComponent'
 
 function App() {
   
@@ -19,6 +20,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/dashboard' element={<UserDashboard />} />
+          <Route path='/chat' element={<ChatComponent />} />
 
 
           <Route path="*" element={<Page404 />} />
