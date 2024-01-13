@@ -13,16 +13,24 @@ const ChatComponent = () => {
 
   useEffect(() => {
     socket.on("response", (data) => {
+      console.log(data);
       if (data.userId !== userId) {
         return () => socket.off("response");
       }
 
-      setChatHistory((prev) => [...prev, data]);
+      setChatHistory((prev) => [...prev, {response:data.response}]);
     });
+
+    return () => {
+      socket.off('response');
+    }
+
   }, [userId]);
+
 
   const sendMessage = () => {
     socket.emit("message", { userId, message });
+    setChatHistory((prev) => [...prev,{message}])
     setMessage("");
   };
 
@@ -32,16 +40,24 @@ const ChatComponent = () => {
         {chatHistory.map((chat, index) => (
           <div
             key={index}
-            className={`p-2 rounded-lg ${
-              chat.userId === userId
-                ? "bg-blue-200 ml-auto"
-                : "bg-green-200 mr-auto"
-            }`}
+            className={`p-2`}
           >
-            <strong>{chat.userId === userId && "You" }:</strong>{" "}
-            {chat.message } <br />
+            {chat.message && (
+              <div className="mr-auto bg-blue-300 rounded-lg p-3 w-1/2">
+
+              <strong> "You" :</strong>{" "}
+               {chat.message }
+               
+               </div>
+
+            )}
+           
+            {chat.response && (
+            <div className="ml-auto bg-green-300 rounded-lg p-3 w-1/2">
             <strong>{"COURSE ADVISER"}:</strong>{" "}
-            {chat.response && chat.response}
+            {chat.response}
+            </div>)}
+            
           </div>
         ))}
       </div>

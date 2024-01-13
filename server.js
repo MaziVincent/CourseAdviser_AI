@@ -21,8 +21,9 @@ const server = http.createServer(app);
 
 const io = socketIo(server,{
   cors : {
-        origin:process.env.NODE_ENV === "production" ? false : ["http://localhost:5174","http://127.0.0.1:5500"]
+        origin:process.env.NODE_ENV === "production" ? false : ["http://localhost:5173","http://127.0.0.1:5500"]
   }
+  
 });
 
 //CONNECT TO MONGO DB
@@ -102,9 +103,9 @@ io.on('connection',(socket)=>{
       console.log(witResponse);
 
       const chatReply = generateReplyFromIntent(
-        witResponse.intents.length > 0 ? witResponse.intents[0].name : null,
-        witResponse.intents.length > 0 ? witResponse.intents[0].confidence : 0
+        witResponse.intents.length > 0 ? witResponse.intents : null
     );
+    
       console.log(chatReply);
 
       const chat = new Chat({
