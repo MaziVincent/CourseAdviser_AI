@@ -11,7 +11,7 @@ const generateAccessToken = (email, roles) => {
             }
         },
         process.env.ACCESS_TOKEN_SECRET,
-        {expiresIn: '5s'}
+        {expiresIn: '1d'}
     );
 
     return accessToken;

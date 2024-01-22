@@ -30,7 +30,7 @@ const Hero = () => {
           fullWidth
         >
           <h1 className="mt-[90px] text-center text-5xl lg:text-7xl leading-tight xs:text-[64px] text-gray-700 max-w-[1050px] font-extrabold">
-          My Adviser, an AI course adviser chatbot.
+          My Computer Science AI course adviser chatbot.
           </h1>
         </FadeIn>
         <FadeIn

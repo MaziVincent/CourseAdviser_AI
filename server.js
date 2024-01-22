@@ -14,6 +14,7 @@ const mongoose = require('mongoose');
 const connectDb = require('./config/dbConnection')
 const cookieParser = require('cookie-parser');
 const Chat = require('./models/Chat')
+const ChatHistory = require('./models/ChatHistory')
 const {Wit} = require('node-wit')
 const generateReplyFromIntent = require('./services/generateReplyFromIntent')
 const PORT = process.env.PORT || 3600;
@@ -59,6 +60,8 @@ app.use('/logout', require('./routes/logout'));
 
 app.use(verifyJWT)
 app.use('/students', require('./routes/students'));
+app.use('/chat', require('./routes/chat'));
+app.use('/history', require('./routes/history'));
 
 
 app.all("*", (req, res) => {
@@ -90,7 +93,7 @@ io.on('connection',(socket)=>{
 
   socket.on('message', async (data)=>{
 
-    const {userId, message} = data;
+    const {userId, message, historyId} = data;
 
     console.log(data);
 
@@ -115,6 +118,11 @@ io.on('connection',(socket)=>{
       });
 
       await chat.save();
+
+      const history = await ChatHistory.findOne({_id:historyId})
+
+      history.chats.push(chat);
+      await history.save();
 
       io.emit('response',{ message, response: chatReply, userId})
     }

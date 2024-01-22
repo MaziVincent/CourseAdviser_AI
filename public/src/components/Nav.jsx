@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo1.jpg"
+import logo from "../assets/logo1.jpg";
+import AuthContext from "../context/AuthProvider";
 
 import { HiMenuAlt3 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 import { ClickAwayListener } from "@mui/material";
 
 const Nav = () => {
+
+  const {auth} = useContext(AuthContext)
 
     const [showMobileMenu, setShowMobileMenu] = useState(false);
 
@@ -25,12 +28,24 @@ const Nav = () => {
            </Link> 
         </div>
         
-        <ul className="hidden md:flex items-center gap-10 lg:gap-[68px]">
+        {
+          !auth.user?(
+            <ul className="hidden md:flex items-center gap-10 lg:gap-[68px]">
           <Link to="register" className="textbase md:text-lg lg:text-xl text-gray-700 cursor-pointer hover:bg-gradient-to-r from-red-400 to-blue-500 hover:bg-clip-text hover:text-transparent">Get Started</Link>
           <Link to="login" className="text-lg lg:text-xl text-gray-700 cursor-pointer hover:bg-gradient-to-r from-red-400 to-blue-500 hover:bg-clip-text hover:text-transparent">Login</Link>
     
           
         </ul>
+          ):(
+            <ul className="hidden md:flex items-center gap-10 lg:gap-[68px]">
+          <Link to="dashboard" className="textbase md:text-lg lg:text-xl text-gray-700 cursor-pointer hover:bg-gradient-to-r from-red-400 to-blue-500 hover:bg-clip-text hover:text-transparent"> Dashboard </Link>
+          
+    
+          
+        </ul>
+          )
+        }
+        
 
         
         <HiMenuAlt3

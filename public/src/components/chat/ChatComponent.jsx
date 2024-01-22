@@ -1,17 +1,42 @@
 import { useEffect, useState, useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
 import io from "socket.io-client";
+import useFetch from "../../hooks/useFetch";
+import baseUrl from "../../shared/baseUrl";
+import { useParams } from "react-router-dom";
+//import { useQuery } from "react-query";
+
 
 const socket = io("http://localhost:3600");
 
 const ChatComponent = () => {
+
   const { auth } = useContext(AuthContext);
   const userId = auth.user._id;
+  const fetch = useFetch();
+  const url = `${baseUrl}chat`
+  const {id} = useParams();
 
   const [message, setMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
 
+  const fetchChatHistory = async () => {
+
+    const response = await fetch(`${baseUrl}history/${id}`,auth.accessToken);
+    setChatHistory(response.data?.chatHistory?.chats)
+    console.log(response.data)
+
+  }
+
+
+  useEffect(()=>{
+
+    fetchChatHistory()
+    
+  },[])
+
   useEffect(() => {
+
     socket.on("response", (data) => {
       console.log(data);
       if (data.userId !== userId) {
@@ -28,11 +53,20 @@ const ChatComponent = () => {
   }, [userId]);
 
 
+
+
   const sendMessage = () => {
-    socket.emit("message", { userId, message });
+    socket.emit("message", { userId, message, historyId:id });
     setChatHistory((prev) => [...prev,{message}])
     setMessage("");
   };
+
+  const handleKeypress = e => {
+    //it triggers by pressing the enter key
+  if (e.keyCode === 13) {
+    sendMessage();
+  }
+};
 
   return (
     <div className="flex flex-col h-screen pt-20">
@@ -69,8 +103,10 @@ const ChatComponent = () => {
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Type a message..."
             className="flex-grow p-2 border rounded"
+            onKeyDown={handleKeypress}
           />
           <button
+          type="submit"
             onClick={sendMessage}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
           >
