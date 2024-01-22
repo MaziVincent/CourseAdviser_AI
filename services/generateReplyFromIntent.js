@@ -34,6 +34,27 @@ function generateReplyFromIntent(intentData) {
         case 'FeeStructure':
             reply = "I can provide details about fee structures. Which course or program are you inquiring about?";
             break;
+        case 'greeting':
+            reply = " You are welcome to the Course Adviser AI ChatBot, How can i help you today?";
+            break;
+         case 'CourseRegistration':
+             reply = " You can register your course through the following steps; \n i. visit portal.funai.edu.ng \n ii input username and password \n Click on course registration Icon, select the session and semester \n Proceed and regiser your courses";
+             break;
+        case 'HOD':
+            reply = " The name of the computer science HOD is Dr. I. I. Achi, He is a tech genius with many awards to his name. He current handles CSC 433, Computer Graphics and visualization";
+            break;
+        case 'datacapturing':
+            reply = "1. Visit Cbt.Funai.edu.ng   2.- Input username and password 3.- Select Courses  ";
+            break;
+        case 'resultchecking':
+            reply = "1. Visit portal.Funai.edu.ng   2.- Input username and password 3.- click on the result Icon 4.- Select session, semester and submit  ";
+            break;
+        case 'courseadviser':
+            reply = "Mr. Onwudebelu; He is the course adviser for computer science, you visit his office at the department building  ";
+            break;
+        case 'electivecourses':
+            reply = "There is no elective course for 100L, refer to Mr. Onwudebelu for more Information. His office is at the faculty building  ";
+            break;
         // Add additional cases for other intents
         default:
             // Reply remains the default message for unrecognized intents
